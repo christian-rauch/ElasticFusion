@@ -685,6 +685,8 @@ void ElasticFusion::savePly() {
   std::string filename = saveFilename;
   filename.append(".ply");
 
+  std::cout << "save to: " << saveFilename << ".{ply,txt}" << std::endl;
+
   // Open file
   std::ofstream fs;
   fs.open(filename.c_str());
@@ -778,6 +780,21 @@ void ElasticFusion::savePly() {
   fs.close();
 
   delete[] mapData;
+
+  // save poses
+  {
+    const std::string pose_filename = saveFilename + ".txt";
+    std::ofstream fs;
+    fs.open(pose_filename.c_str());
+    for (const auto &[i, se3] : t_T_wc) {
+      const Eigen::Isometry3d T(se3.matrix());
+      fs << poseLogTimes.at(i-1) << " ";
+      fs << T.translation().transpose() << " ";
+      fs << Eigen::Quaterniond(T.rotation()).coeffs().transpose();
+      fs << std::endl;
+    }
+    fs.close();
+  }
 }
 
 // Sad times ahead
