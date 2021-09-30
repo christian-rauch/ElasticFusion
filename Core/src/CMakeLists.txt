@@ -97,7 +97,6 @@ set(PUBLIC_HEADERS
   "Utils/CholeskyDecomp.h"
   "Utils/OrderedJacobianRow.h"
   "Utils/Stopwatch.h"
-  "Utils/GPUConfig.h"
   "Utils/Jacobian.h"
   "Utils/GraphNode.h"
   "Utils/Img.h"
