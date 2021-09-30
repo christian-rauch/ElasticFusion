@@ -18,6 +18,7 @@
  */
 
 #include "MainController.h"
+#include "Tools/RosNodeReader.hpp"
 
 MainController::MainController(int argc, char* argv[])
     : good(true),
@@ -48,9 +49,16 @@ MainController::MainController(int argc, char* argv[])
     logReader = new RawLogReader(logFile, Parse::get().arg(argc, argv, "-f", empty) > -1);
   } else {
     bool flipColors = Parse::get().arg(argc, argv, "-f", empty) > -1;
+    if (Parse::get().arg(argc, argv, "-ros" , empty) > -1) {
+      ros::init(argc, argv, "EF");
+      logReader = new RosNodeReader(15, flipColors, {640, 480});
+      good = true;
+    }
+    else {
     logReader = new LiveLogReader(logFile, flipColors, LiveLogReader::CameraType::OpenNI2);
 
-    good = ((LiveLogReader*)logReader)->cam->ok();
+    good = ((LiveLogReader *)logReader)->cam->ok();
+    }
 
 #ifdef WITH_REALSENSE
     if (!good) {

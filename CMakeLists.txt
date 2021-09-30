@@ -19,6 +19,14 @@ find_package(CUDA REQUIRED)
 find_package(OpenNI2 REQUIRED)
 find_package(SuiteSparse REQUIRED)
 
+find_package(rosbag REQUIRED)
+find_package(tf2 REQUIRED)
+find_package(roscpp REQUIRED)
+find_package(image_transport REQUIRED)
+find_package(tf2_ros REQUIRED)
+find_package(cv_bridge REQUIRED)
+find_package(image_geometry REQUIRED)
+
 include_directories(${JPEG_INCLUDE_DIR})
 include_directories(${ZLIB_INCLUDE_DIR})
 include_directories(${EIGEN_INCLUDE_DIRS})
@@ -27,6 +35,8 @@ include_directories(${CUDA_INCLUDE_DIRS})
 include_directories(${OPENNI2_INCLUDE_DIR})
 include_directories(${SUITESPARSE_INCLUDE_DIRS})
 include_directories(${Sophus_INCLUDE_DIR})
+
+include_directories("Core")
 
 if(WITH_REALSENSE)
   include_directories(${REALSENSE_INCLUDE_DIR})
@@ -46,7 +56,7 @@ set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-O3 -msse2 -msse3 -Wall -std=c++11 -DSHA
 
 add_subdirectory(Core)
 
-add_executable(ElasticFusion 
+add_executable(ElasticFusion
                ${srcs}
                ${tools_srcs}
 )
@@ -69,4 +79,33 @@ target_link_libraries(ElasticFusion
 )
 
 set_property(TARGET ElasticFusion PROPERTY CXX_STANDARD 17)
+
+target_include_directories(ElasticFusion PUBLIC
+    ${rosbag_INCLUDE_DIRS}
+    ${tf2_INCLUDE_DIRS}
+)
+target_link_libraries(ElasticFusion
+    ${rosbag_LIBRARIES}
+    ${tf2_LIBRARIES}
+)
+
+target_include_directories(ElasticFusion PUBLIC
+    ${roscpp_INCLUDE_DIRS}
+    ${image_transport_INCLUDE_DIRS}
+    ${tf2_ros_INCLUDE_DIRS}
+)
+target_link_libraries(ElasticFusion
+    ${roscpp_LIBRARIES}
+    ${image_transport_LIBRARIES}
+    ${tf2_ros_LIBRARIES}
+)
+
+target_include_directories(ElasticFusion PUBLIC
+    ${cv_bridge_INCLUDE_DIRS}
+    ${image_geometry_INCLUDE_DIRS}
+)
+target_link_libraries(ElasticFusion
+    ${cv_bridge_LIBRARIES}
+    ${image_geometry_LIBRARIES}
+)
 
