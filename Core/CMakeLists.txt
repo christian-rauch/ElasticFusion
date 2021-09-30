@@ -55,3 +55,5 @@ target_link_libraries(efusion
                       ${CUDA_LIBRARIES}
                       ${SUITESPARSE_LIBRARIES}
 )
+
+set_property(TARGET efusion PROPERTY CXX_STANDARD 17)

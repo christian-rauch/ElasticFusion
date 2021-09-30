@@ -55,7 +55,11 @@ target_link_libraries(ElasticFusion
                       efusion
                       ${ZLIB_LIBRARY}
                       ${JPEG_LIBRARY}
-                      ${Pangolin_LIBRARIES}
+                      # ${Pangolin_LIBRARIES}
+                      pango_core
+                        pango_display
+                        pango_plot
+                        pango_video
                       ${CUDA_LIBRARIES}
                       ${EXTRA_LIBS}
                       ${OPENNI2_LIBRARY}
@@ -63,3 +67,6 @@ target_link_libraries(ElasticFusion
                       ${BLAS_LIBRARIES}
                       ${LAPACK_LIBRARIES}
 )
+
+set_property(TARGET ElasticFusion PROPERTY CXX_STANDARD 17)
+
