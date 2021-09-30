@@ -35,7 +35,7 @@
 #include "Defines.h"
 
 #include <iomanip>
-#include <pangolin/gl/glcuda.h>
+// #include <pangolin/gl/glcuda.h>
 
 class ElasticFusion
 {

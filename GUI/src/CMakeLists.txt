@@ -26,6 +26,7 @@ find_package(CUDA REQUIRED)
 find_package(OpenNI2 REQUIRED)
 find_package(efusion REQUIRED)
 find_package(SuiteSparse REQUIRED)
+find_package(JPEG REQUIRED)
 
 if(WIN32)
   find_package(RealSense QUIET)
@@ -72,17 +73,25 @@ endif()
 set(CMAKE_CXX_FLAGS ${ADDITIONAL_CMAKE_CXX_FLAGS} "-O3 -msse2 -msse3 -Wall -std=c++11")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -std=c++11")
 
-add_executable(ElasticFusion 
+add_executable(ElasticFusion
                ${srcs}
                ${tools_srcs}
                ${hdrs}
                ${tools_hdrs}
 )
 
+set_property(TARGET ElasticFusion PROPERTY CXX_STANDARD 17)
+
 target_link_libraries(ElasticFusion
 					  ${EXTRA_WINDOWS_LIBS}
                       ${ZLIB_LIBRARY}
-                      ${Pangolin_LIBRARIES}
+                      # ${Pangolin_LIBRARIES}
+                      pango_opengl
+                      pango_core
+                      pango_display
+                      pango_plot
+                      pango_video
+                      JPEG::JPEG
                       ${CUDA_LIBRARIES}
                       ${EXTRA_LIBS}
                       ${EFUSION_LIBRARY}

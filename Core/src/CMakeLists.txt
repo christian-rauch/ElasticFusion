@@ -4,7 +4,7 @@ project(libefusion)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}")
 
-find_package(Pangolin 0.1 REQUIRED)
+find_package(Pangolin 0.7 REQUIRED COMPONENTS core opengl display)
 find_package(CUDA REQUIRED)
 find_package(SuiteSparse REQUIRED)
 
@@ -29,8 +29,8 @@ if(WIN32)
   file(GLOB containers_hdrs Cuda/containers/*.hpp)
 endif()
 
-set(CUDA_ARCH_BIN "30 35 50 52 61" CACHE STRING "Specify 'real' GPU arch to build binaries for, BIN(PTX) format is supported. Example: 1.3 2.1(1.3) or 13 21(13)")
 set(CUDA_ARCH_PTX "" CACHE STRING "Specify 'virtual' PTX arch to build PTX intermediate code for. Example: 1.0 1.2 or 10 12")              
+set(CUDA_ARCH_BIN "35 50 52 61" CACHE STRING "Specify 'real' GPU arch to build binaries for, BIN(PTX) format is supported. Example: 1.3 2.1(1.3) or 13 21(13)")
 
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR})
 include(CudaComputeTargetFlags.cmake)                  
@@ -68,9 +68,17 @@ add_library(efusion SHARED
             ${containers_hdrs}
 )
 
+set_property(TARGET efusion PROPERTY CXX_STANDARD 17)
+
+
 target_link_libraries(efusion
                       ${Eigen_LIBRARIES}
-                      ${Pangolin_LIBRARIES}
+                      # ${Pangolin_LIBRARIES}
+                      pango_opengl
+                      pango_core
+                      pango_display
+                      pango_plot
+                      pango_video
                       ${CUDA_LIBRARIES}
                       ${SUITESPARSE_LIBRARIES}
 					  ${EXTRA_WINDOWS_LIBS}
