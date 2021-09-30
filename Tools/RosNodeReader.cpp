@@ -108,7 +108,8 @@ void RosNodeReader::getBack() {}
 void RosNodeReader::fastForward(int /*frame*/) {}
 
 const std::string RosNodeReader::getFile() {
-  return {};
+  // this is where the cloud and pose will be stored
+  return "/tmp/elastic_fusion_result";
 }
 
 void RosNodeReader::setAuto(bool /*value*/) {
