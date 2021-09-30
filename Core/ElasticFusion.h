@@ -34,7 +34,7 @@
 #include "Utils/Resolution.h"
 #include "Utils/Stopwatch.h"
 
-#include <pangolin/gl/glcuda.h>
+// #include <pangolin/gl/glcuda.h>
 #include <iomanip>
 
 class ElasticFusion {

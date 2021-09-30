@@ -20,7 +20,7 @@
 #ifndef FEEDBACKBUFFER_H_
 #define FEEDBACKBUFFER_H_
 
-#include <pangolin/display/opengl_render_state.h>
+#include <pangolin/gl/opengl_render_state.h>
 #include <pangolin/gl/gl.h>
 #include "../Utils/Intrinsics.h"
 #include "../Utils/Resolution.h"
