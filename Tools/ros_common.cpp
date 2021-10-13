@@ -111,8 +111,8 @@ void
 ImageCropTarget::map_target(std::pair<cv::Mat, cv::Mat> &rgbd) {
   // rectify images
   if (!camera_model.distortionCoeffs().empty()) {
-    camera_model.rectifyImage(rgbd.first, rgbd.first);
-    camera_model.rectifyImage(rgbd.second, rgbd.second);
+    camera_model.rectifyImage(rgbd.first, rgbd.first, cv::INTER_LINEAR);
+    camera_model.rectifyImage(rgbd.second, rgbd.second, cv::INTER_NEAREST);
   }
 
   // crop and scale to target dimension
